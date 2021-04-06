@@ -41,21 +41,9 @@
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 4px;
   background-color: rgba(112, 112, 112, 0.774);
   border-radius: 3px;
-}
-
-.restartBtn {
-  padding: 5px 10px;
-  outline: none;
-  border: none;
-  background-color: white;
-  color: #50b0ff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 800;
-  display: none;
 }
 
 .title {
@@ -63,20 +51,96 @@
 }
 
 .gameplay {
-  display: grid;
   width: calc(100% - 20px);
-  aspect-ratio: 1;
+  display: block;
+  position: relative;
+}
+
+.boxes {
+  display: grid;
   grid-template-columns: auto auto auto;
+  aspect-ratio: 1;
+  width: 100%;
 }
 
 .box {
   background-color: white;
-  /* width: 130px; */
-  /* height: 130px; */
   margin: 4px;
   border-radius: 3px;
   background-size: 60%;
   background-repeat: no-repeat;
   background-position: center;
   transition: all 0.4s ease-out;
+}
+
+.restartContainer {
+  background-color: rgba(0, 0, 0, 0.788);
+  width: 80%;
+  aspect-ratio: 2;
+  position: absolute;
+  border-radius: 5px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(2px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.restartBtn {
+  padding: 10px 20px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  background-color: white;
+  color: #50b0ff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 800;
+  font-size: large;
+  box-shadow: 0px 0px 7px rgb(196, 196, 196);
+}
+
+.restartBtn:hover {
+  color: hsl(207, 100%, 56%);
+  box-shadow: 0px 0px 9px rgb(255, 255, 255);
+}
+
+.resultBox {
+  margin-bottom: 5px;
+  color: rgb(255, 238, 0);
+  font-size: larger;
+  letter-spacing: 2px;
+}
+
+.scores {
+  width: calc(100% - 30px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.player {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  border-radius: 3px;
+}
+.player img {
+  width: 30px;
+  aspect-ratio: 1;
+  background-color: rgb(255, 255, 255);
+  padding: 6px;
+  border-radius: 2px;
+}
+.player .score {
+  font-size: larger;
+  width: 50px;
+  text-align: center;
+  color: white;
 }

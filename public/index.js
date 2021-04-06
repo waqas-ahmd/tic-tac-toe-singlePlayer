@@ -1,5 +1,10 @@
-const dot = { image: "url(/public/dot.svg)", title: "dot" };
-const cross = { image: "url(/public/cross.svg)", title: "cross" };
+const dot = { image: "url(images/dot.svg)", title: "dot" };
+const cross = { image: "url(images/cross.svg)", title: "cross" };
+const COLOR1 = "transparent";
+const COLOR2 = "#060171";
+
+var dotScore = 0;
+var crossScore = 0;
 var isPlayer1 = true;
 var gameOver = false;
 var boxesChecked = 0;
@@ -17,9 +22,11 @@ const correctPatterns = [
 ];
 
 var boxes = document.querySelectorAll(".box");
-var playerName = document.querySelector("#playerName");
-var playerState = document.querySelector("#playerState");
-var restartBtn = document.querySelector(".restartBtn");
+var restartBtn = document.querySelector(".restartContainer");
+var resultBox = document.querySelector(".resultBox");
+var dotPlayer = document.querySelector(".dot");
+var crossPlayer = document.querySelector(".cross");
+var scores = document.querySelectorAll(".score");
 
 startNewGame();
 
@@ -34,6 +41,8 @@ restartBtn.addEventListener("click", startNewGame);
 
 function handleBoxClick(index) {
   var { image, title } = isPlayer1 ? dot : cross;
+  dotPlayer.style.backgroundColor = isPlayer1 ? COLOR1 : COLOR2;
+  crossPlayer.style.backgroundColor = isPlayer1 ? COLOR2 : COLOR1;
   if (boxes[index].checkType === null) {
     boxes[index].style.backgroundImage = image;
     boxes[index].checkType = title;
@@ -51,9 +60,11 @@ function checkGameProgress() {
     b3 = boxes[p[2]].checkType;
 
     if (b1 === "dot" && b2 === "dot" && b3 === "dot") {
+      dotScore += 1;
       handleGameEnd(player1, p);
       return;
     } else if (b1 === "cross" && b2 === "cross" && b3 === "cross") {
+      crossScore += 1;
       handleGameEnd(player2, p);
       return;
     }
@@ -62,41 +73,44 @@ function checkGameProgress() {
     handleGameDraw();
     return;
   }
-  setCurrentPlayerName();
 }
 
 function handleGameEnd(winner, matchedBoxes) {
-  restartBtn.style.display = "block";
+  scores[0].innerHTML = dotScore;
+  scores[1].innerHTML = crossScore;
+  showRestartButton();
   boxes.forEach((box, index) => {
     matchedBoxes.includes(index)
       ? (box.style.backgroundColor = "#441d52")
       : null;
   });
-  playerState.innerHTML = " Wins";
+  resultBox.innerHTML = `${winner} Wins`;
   gameOver = true;
 }
 
 function handleGameDraw() {
-  restartBtn.style.display = "block";
+  showRestartButton();
   gameOver = true;
-  playerState.innerHTML = "Draw";
-  playerName.innerHTML = "Game ";
-}
-
-function setCurrentPlayerName() {
-  playerName.innerHTML = isPlayer1 ? player1 : player2;
+  resultBox.innerHTML = "Game Drawn";
 }
 
 function startNewGame() {
+  dotPlayer.style.backgroundColor = COLOR2;
+  crossPlayer.style.backgroundColor = COLOR1;
   restartBtn.style.display = "none";
   boxesChecked = 0;
-  playerState.innerHTML = "'s Turn";
+
   isPlayer1 = true;
-  setCurrentPlayerName();
   gameOver = false;
   boxes.forEach((box) => {
     box.checkType = null;
     box.style.backgroundImage = "none";
     box.style.backgroundColor = "white";
   });
+}
+
+function showRestartButton() {
+  setTimeout(() => {
+    restartBtn.style.display = "flex";
+  }, 150);
 }
