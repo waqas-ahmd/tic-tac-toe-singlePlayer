@@ -70,7 +70,7 @@
   background-size: 60%;
   background-repeat: no-repeat;
   background-position: center;
-  transition: all 0.4s ease-out;
+  transition: all 0.2s ease;
 }
 
 .restartContainer {
@@ -143,4 +143,11 @@
   width: 50px;
   text-align: center;
   color: white;
+}
+
+.winnerBoxes {
+  transition-duration: 0.5s;
+  /* background-color: rgb(255, 158, 31) !important; */
+  transform: scale(0.8) rotateZ(90deg);
+  border-radius: 10px;
 }

@@ -1,5 +1,9 @@
-const dot = { image: "url(images/dot.svg)", title: "dot" };
-const cross = { image: "url(images/cross.svg)", title: "cross" };
+const dot = { image: "url(images/dot.svg)", title: "dot", color: "#333dfd" };
+const cross = {
+  image: "url(images/cross.svg)",
+  title: "cross",
+  color: "#fd3333",
+};
 const COLOR1 = "transparent";
 const COLOR2 = "#060171";
 
@@ -40,15 +44,27 @@ boxes.forEach((box, index) => {
 restartBtn.addEventListener("click", startNewGame);
 
 function handleBoxClick(index) {
-  var { image, title } = isPlayer1 ? dot : cross;
+  var { image, title, color } = isPlayer1 ? dot : cross;
   dotPlayer.style.backgroundColor = isPlayer1 ? COLOR1 : COLOR2;
   crossPlayer.style.backgroundColor = isPlayer1 ? COLOR2 : COLOR1;
   if (boxes[index].checkType === null) {
     boxes[index].style.backgroundImage = image;
+    boxes[index].style.backgroundColor = color;
     boxes[index].checkType = title;
     isPlayer1 = !isPlayer1;
     boxesChecked += 1;
-    setTimeout(checkGameProgress, 10);
+    checkGameProgress();
+  }
+  if (!isPlayer1 && boxesChecked < 9 && !gameOver) {
+    let emptyBoxes = [];
+    boxes.forEach((box, key) => {
+      if (box.checkType === null) {
+        emptyBoxes.push(key);
+      }
+    });
+
+    let randomIndex = emptyBoxes[Math.floor(Math.random() * emptyBoxes.length)];
+    handleBoxClick(randomIndex);
   }
 }
 
@@ -80,9 +96,7 @@ function handleGameEnd(winner, matchedBoxes) {
   scores[1].innerHTML = crossScore;
   showRestartButton();
   boxes.forEach((box, index) => {
-    matchedBoxes.includes(index)
-      ? (box.style.backgroundColor = "#441d52")
-      : null;
+    matchedBoxes.includes(index) ? box.classList.add("winnerBoxes") : null;
   });
   resultBox.innerHTML = `${winner} Wins`;
   gameOver = true;
@@ -106,6 +120,7 @@ function startNewGame() {
     box.checkType = null;
     box.style.backgroundImage = "none";
     box.style.backgroundColor = "white";
+    box.classList.remove("winnerBoxes");
   });
 }
 
