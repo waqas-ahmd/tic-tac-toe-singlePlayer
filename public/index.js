@@ -45,9 +45,10 @@ restartBtn.addEventListener("click", startNewGame);
 
 function handleBoxClick(index) {
   var { image, title, color } = isPlayer1 ? dot : cross;
-  dotPlayer.style.backgroundColor = isPlayer1 ? COLOR1 : COLOR2;
-  crossPlayer.style.backgroundColor = isPlayer1 ? COLOR2 : COLOR1;
+
   if (boxes[index].checkType === null) {
+    dotPlayer.style.backgroundColor = isPlayer1 ? COLOR1 : COLOR2;
+    crossPlayer.style.backgroundColor = isPlayer1 ? COLOR2 : COLOR1;
     boxes[index].style.backgroundImage = image;
     boxes[index].style.backgroundColor = color;
     boxes[index].checkType = title;
